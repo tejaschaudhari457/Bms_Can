@@ -27,3 +27,23 @@
                           |
                           V
                     Serial Monitor
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+[BMS Internal Data]
+     |
+     | (Total Voltage, Current, SOC, Cell Voltages, NTC Temp, etc.)
+     ↓
+[JBD BMS CAN Controller]
+     |
+     | (Sends frames via CAN protocol — ID based)
+     ↓
+   CAN_H / CAN_L  ===>  [MCP2515 CAN Module]
+                                |
+                                | SPI Bus (MOSI, MISO, SCK, CS)
+                                ↓
+                            [ESP32]
+                                |
+                                | Data Decode (CAN.readMsgBuf)
+                                ↓
+                      Serial Monitor / Display / Logging
+
