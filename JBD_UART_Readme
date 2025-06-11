@@ -1,0 +1,97 @@
+# 🔋 JBD UART Communication with ESP32
+
+This project implements serial (UART) communication between an **ESP32** and a **JBD (Jiabaida) Smart BMS**, allowing real-time monitoring of battery parameters such as voltage, current, capacity, cell voltages, temperature, protection states, and more.
+
+> 📁 Source Folder: `JBD_UART`  
+> 🌐 Repository: [Lithium India GitHub](https://github.com/tejaschaudhari457/lithium-india/tree/main/JBD_UART)
+
+---
+
+## 📌 Features
+
+- Communication over UART1 (GPIO 16 = RX, GPIO 17 = TX)
+- Sends pre-defined BMS commands and parses structured responses
+- Monitors and displays:
+  - Battery voltage, current, power
+  - State of charge (SOC)
+  - Remaining and total capacity
+  - Temperature from multiple probes
+  - Cell voltages and their variations
+  - Protection flags and status bits
+  - Firmware version and manufacturing date
+  - BMS device model name
+- Displays human-readable output via Serial Monitor
+
+---
+
+## 🔧 Hardware Setup
+
+### Required Components
+
+- ESP32 Dev Board
+- JBD BMS with UART output
+- Jumper Wires
+
+### Wiring Diagram
+
+| ESP32 Pin | BMS UART Pin |
+|-----------|--------------|
+| GPIO 16   | TX           |
+| GPIO 17   | RX           |
+| GND       | GND          |
+
+> ⚠️ **Important:** Cross RX and TX between ESP32 and BMS.
+
+---
+
+## 📄 How It Works
+
+1. **Initialization**: Sets up UART communication with the BMS.
+2. **Command Sending**: Sends 3 commands to fetch general status, cell voltages, and model name.
+3. **Response Parsing**: Decodes received byte arrays into meaningful information.
+4. **Display**: Outputs the parsed data to the Serial Monitor in a structured format.
+5. **Loop**: Repeats the process every 3 seconds.
+
+---
+
+## 🚀 Getting Started
+
+### Arduino Setup
+
+1. Install **ESP32 board support** in Arduino IDE.
+2. Connect ESP32 to your system.
+3. Open `JBD_UART.ino` from this repository.
+4. Upload the code to your ESP32.
+5. Open **Serial Monitor** at **115200 baud**.
+
+---
+
+## 📊 Sample Output
+
+10:57:40.341 -> BMS Manufacturing Date:  7-11-2024
+10:57:40.341 -> BMS Software Version  :  6.00
+10:57:40.341 -> Cycle-Index           :  0
+10:57:40.341 -> MOS State             :  11
+10:57:40.341 -> Charging MOS ON.
+10:57:40.341 -> Discharging MOS ON.
+10:57:40.382 -> Protection State      :  0
+10:57:40.448 -> Command sent by PC    :  DD  A5  4  0  FF  FC  77  
+10:57:41.473 -> Valid BMS response    :  DD  4  0  10  A  34  C  F1  C  E2  C  EB  C  E7  C  F3  C  F6  C  EB  F8  E5  77  
+10:57:41.473 -> Num of Cells          :  8 Cells
+10:57:41.473 -> Voltage of Cell 1    :  2.61 V
+10:57:41.473 -> Voltage of Cell 2    :  3.31 V
+10:57:41.473 -> Voltage of Cell 3    :  3.30 V
+10:57:41.473 -> Voltage of Cell 4    :  3.31 V
+10:57:41.474 -> Voltage of Cell 5    :  3.30 V
+10:57:41.474 -> Voltage of Cell 6    :  3.31 V
+10:57:41.514 -> Voltage of Cell 7    :  3.32 V
+10:57:41.514 -> Voltage of Cell 8    :  3.31 V
+10:57:41.514 -> High Cell Voltage     :  3.32 V
+10:57:41.514 -> Low Cell Voltage      :  2.61 V
+10:57:41.514 -> Cell Voltage Diff.    :  0.71 V
+10:57:41.514 -> Average Cell Voltage  :  3.22 V
+10:57:41.615 -> Command sent by PC    :  DD  A5  5  0  FF  FB  77  
+10:57:42.631 -> Valid BMS response    :  DD  5  0  10  53  50  32  34  53  30  30  34  4C  32  34  53  31  35  30  41  FC  24  77  
+10:57:42.631 -> Device Model          :  SP24S004L24S150A
+11:26:37.871 -> Valid BMS response    :  DD  4  0  10  A  1A  C  F6  C  EE  C  ED  C  E6  C  F5  C  F1  C  E8  F8  F3  77  
+
