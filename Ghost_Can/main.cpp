@@ -1,3 +1,22 @@
+/*
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+monitor_speed = 115200
+upload_port = COM10
+
+lib_deps = CAN
+
+build_flags =
+  -D CAN_RX_GPIO=16
+  -D CAN_TX_GPIO=17
+
+monitor_filters = esp32_exception_decoder
+build_type = debug
+
+*/
+
 /* Ghost 192S BMS — Full parser & friendly summary
    - Parses groups 0x01..0x54 per the PDF you provided
    - Keeps ISR small: onReceive copies bytes and sets flag
